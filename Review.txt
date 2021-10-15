@@ -1,0 +1,71 @@
+                === src: thư viện express
+
+                === package.json: quản lí người dùng == npm start, beautiful, npm run watch
+Blog_new =====
+                === package-lock.json: quản lí các phiên bản đã cài đặt
+
+
+
+                === src                     ===== index.js : khởi tạo app, khai báo các middleware, định dang các loại đường, pulic các tài nguyên, khởi chạy database
+                                            
+                                            ===== router  : Định tuyến(chia nhiều cấp) + Xác định phương thức cho mỗi tuyến + Gọi các hàm Controller
+                                            
+                                                                ==== index.js: tách từ cái trên ra, định tuyến cho 1 khúc ứng với từng nội dung, 
+                                                                                mỗi khúc đó thì có 1 file js riêng để tạo các khúc nhỏ hơn với các tính năng khác nhau
+                                                                
+                                                                ==== courses.js: có path /courses/.... thực hiện các thao tác với khóa học: thêm sửa xóa, sắp xếp,...
+                                                                ==== me.js: có path /me/... thực hiện hiển thị các khóa học của tôi và cái thùng rác
+                                                                ==== ....
+                                            ===== resources : chứa file handlebars và scss
+
+                                                            ==== views  ==== layouts chứa file main.hbs nhận và các layouts từ Controller
+                                                                        ==== partials chứa file header.hbs và footer.hbs của main.hbs
+
+                                                                        ==== courses chứa các file layout create.hbs, edit.hbs, show.handlebars 
+
+                                                                        ==== me chứa các file layout stored.hbs và trash.hbs
+                                                                
+                                                                        ==== home.hbs chứa body trang chủ
+
+                                                            ==== scss   ==== app.scss : viết như file css thường nhưng k link được trực triếp mà phải dịch ra 
+                                                                            file css ở pulic qua start run watch
+
+                ==== public : chứa các file tĩnh được static ở app
+                                            --- css
+                                            --- img
+                                            --- icon
+
+                ==== config/db/ index.js: tạo connect tới database thông qua mongoose, ở file app thì app.connect()
+
+                ==== app    ==== Controller: chứa các Class Controller xử lí các nội dung trong từng đoạn Path đưa đến các file ở router 
+                                             nhiệm vụ xử lí req, res, render các views, điều hướng
+                            ==== middleware:  thực hiện các công việc trung gian giữa req và res như sort, kiểm tra đăng nhập, ...
+
+                            ==== models : định dạng các trường trong database, xử lí dữ liệu từ data vào ra
+
+                
+                
+                ==== helper và util xử lí các vấn đề phát sinh
+
+
+*** Các phần mềm sử dụng thêm:
+
+=== Path tạo đường public
+
+
+=== Express handlebars
+
+
+=== Mongoose:cung cấp công cụ xử lí dữ liệu từ database và app một cách đơn giản và an toàn
+
+
+=== Methods override: cung cấp các phương thức PUT Path 
+
+
+=== mongoose-delete : Các phương thức xóa mềm
+
+
+=== mongoose-sequence: tạo id tăng dần
+
+
+=== mongoose-slug-generator: 

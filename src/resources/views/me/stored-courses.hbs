@@ -1,0 +1,179 @@
+<form name="container-form" class="table mt-4" method="POST" action="/courses/handle-form-actions">
+  <div class="mb-4">
+    <div class="group-add-name">
+      <h3>
+        Khóa học của tôi 
+      </h3>
+    {{#if admin}}
+      <a href="/courses/create" class="btn btn-info">Thêm khóa học </a>
+      {{/if}}
+    </div>
+    {{#if admin}}
+    <a href="/me/trash/courses"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+        <path fill-rule="evenodd"
+          d="M16 1.75V3h5.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H8V1.75C8 .784 8.784 0 9.75 0h4.5C15.216 0 16 .784 16 1.75zm-6.5 0a.25.25 0 01.25-.25h4.5a.25.25 0 01.25.25V3h-5V1.75z">
+        </path>
+        <path
+          d="M4.997 6.178a.75.75 0 10-1.493.144L4.916 20.92a1.75 1.75 0 001.742 1.58h10.684a1.75 1.75 0 001.742-1.581l1.413-14.597a.75.75 0 00-1.494-.144l-1.412 14.596a.25.25 0 01-.249.226H6.658a.25.25 0 01-.249-.226L4.997 6.178z">
+        </path>
+        <path
+          d="M9.206 7.501a.75.75 0 01.793.705l.5 8.5A.75.75 0 119 16.794l-.5-8.5a.75.75 0 01.705-.793zm6.293.793A.75.75 0 1014 8.206l-.5 8.5a.75.75 0 001.498.088l.5-8.5z">
+        </path>
+      </svg>({{deletedCount}})</a>
+    <div class="mt-3 d-flex align-item-center">
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" value="" id="checkBoxAll">
+        <label class="form-check-label" for="checkBoxAll">
+          Chọn tất cả
+        </label>
+      </div>
+
+      <select class="form-control form-control-sm select-all-options" name="action" required="required">
+        <option value="">-- Chọn hành động --</option>
+        <option value="delete">Xóa</option>
+      </select>
+      <button class="btn btn-primary btn-sm btn-check-all-submit " disabled="disabled">Thực hiện</button>
+    </div>
+  </div>
+    {{/if}}
+
+  <table class="table">
+    <thead>
+      <tr class="bg-success">
+        <th scope="col"></th>
+        <th scope="col">
+          #
+          {{{sortable '_id' _sort}}}
+        </th>
+        <th scope="col">
+          Tên khóa học
+          {{{sortable 'name' _sort}}}
+        </th>
+        <th scope="col">
+          Trình độ
+        </th>
+        <th scope="col" colspan="2">
+          Thời gian tạo
+          {{{sortable 'createdAt' _sort}}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each courses}}
+      <tr>
+        <td>
+          {{#if this.admin}}
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" value="{{this._id}}" id="{{this._id}}" name="coursesIds[]">
+            <label class="form-check-label" for="defaultCheck1">
+            </label>
+          </div>
+          {{/if}}
+        </td>
+        <th scope="row">{{this._id}}</th>
+        <td>{{this.name}}</td>
+        <td>Cơ bản</td>
+        <td>{{this.createdAt}}</td>
+        {{#if this.admin}}
+        <td>
+          <a href="/courses/{{this._id}}/edit" class="btn btn-dark">Sửa</a>
+          <a href="" class="btn btn-dark" data-toggle="modal" data-id="{{this._id}}"
+            data-target="#delete-courses-modal">Xóa</a>
+        </td>
+        {{/if}} 
+      </tr>
+      {{else}}
+      <tr>
+        <td colspan="5" class="text-center "> Bạn chưa đăng khóa học nào!
+          <a href="/courses/create">Đăng khóa học</a>
+        </td>
+      </tr>
+
+      {{/each}}
+    </tbody>
+  </table>
+</form>
+
+
+<!-- Modal -->
+<div class="modal fade" id="delete-courses-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xóa khóa học ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn chắc chắn muốn xóa khóa học này ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        <button id="btn-delete-courses" type="button" class="btn btn-danger">Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE FORM-->
+<form name="delete-courses-form" method="POST"></form>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var id1;
+    var deleteForm = document.forms['delete-courses-form'];
+    var btnDeleteCourses = document.querySelector('#btn-delete-courses');
+
+    $('#delete-courses-modal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget)
+      var id = button.data('id')
+      id1 = id;
+    });
+
+    btnDeleteCourses.onclick = function () {
+      deleteForm.action = '/courses/' + id1 + '?_method=DELETE';
+      deleteForm.submit();
+    }
+
+  })
+
+</script>
+<!-- Chech Box- Xử lí-->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    var checkBoxAll = $('#checkBoxAll')
+    var coursesItemCheckBox = $('input[name="coursesIds[]"]')
+    var containerForm = $('form[name="container-form"]')
+    var checkAllSubmitBtn = $('.btn-check-all-submit')
+
+    console.log(containerForm)
+    //Change checkboxAll
+    checkBoxAll.change(function () {
+      var isCheckedAll = $(this).prop('checked')
+      coursesItemCheckBox.prop('checked', isCheckedAll)
+      renderCheckAllSubmitBtn();
+    })
+    // Courses Item change
+    coursesItemCheckBox.change(function () {
+      var isCheckedAll = coursesItemCheckBox.length === $('input[name="coursesIds[]"]:checked').length
+      checkBoxAll.prop('checked', isCheckedAll)
+      renderCheckAllSubmitBtn();
+    })
+
+    // Re-render check all submit button
+    function renderCheckAllSubmitBtn() {
+      var checkedCount = $('input[name="coursesIds[]"]:checked').length
+      if (checkedCount) {
+        checkAllSubmitBtn.removeAttr('disabled')
+      }
+      else {
+        checkAllSubmitBtn.addAttr('disabled')
+      }
+    }
+
+  })
+</script>

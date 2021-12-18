@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row" id="card-item">
+
+
+  </div>
+</div>
+  <div id="page"></div>
+
+
+<script src="/pagination/pagination.min.js"></script>
+<script>
+  $('#page').pagination({
+    dataSource: '/home-data?page=1',
+    locator: 'course',
+    totalNumberLocator: function(response) {
+        return response.total;
+    },
+    pageSize: 8,
+    afterPageOnClick: function (event, pageNumber) {
+      loadPage(pageNumber);
+    },
+    afterPreviousOnClick: function (event, pageNumber) {
+      loadPage(pageNumber);
+    },
+    afterNextOnClick: function (event, pageNumber) {
+      loadPage(pageNumber);
+    }
+  })
+
+  function loadPage(page) {
+    $.ajax({
+      url: '/home-data?page=' + page,
+    }
+    )
+      .then(data => {
+        $('#card-item').html('')
+        for (let i = 0; i < data.course.length; i++) {
+          const element = data.course[i];
+          var item = $(`
+            <div class="col-sm-6 col-lg-4 col-xl-3">
+      <div class="card card-item card-item-home">
+        <a href="/courses/${element.slug}">
+          <img class="card-img-top" src="${element.image}" alt="${element.image}">
+        </a>
+        <div class="card-body">
+          <a href="/courses/${element.slug}">
+            <h5 class="card-title">${element.name}</h5>
+          </a>
+          <p class="card-text text-truncate">
+            ${element.description}
+          </p>
+          <a href="/courses/${element.slug}" class="btn btn-info btn-hocngay">Học ngay</a>
+        </div>
+      </div>
+    </div>
+          `)
+
+        $('#card-item').append(item)
+        }
+      })
+  }
+  loadPage(1)
+</script>
+
+{{!-- <script src="socket.io/socket.io.js"></script>
+<script>
+  var socket = io("http://localhost:3001")
+  $(document).ready(function(){
+    socket.emit('test', 1234)
+  })
+</script> --}}
+

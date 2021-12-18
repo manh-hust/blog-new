@@ -1,0 +1,52 @@
+<div class="container">
+    <h2 class="mt-3 text-center">Thông báo</h2>
+    <table class="table mt-3">
+  <thead>
+    <tr>
+      <th scope="col">Người gửi</th>
+      <th scope="col-5">Nội dung</th>
+      <th scope="col">Date</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each notifications}}
+    <tr>
+      <td>Admin</td>
+      <td scope="col-5">{{this.noti}}</td>
+      <td>{{this.date.day}}/{{this.date.month}}/{{this.date.year}}</td>
+      <td>
+        {{!-- <btn class="btn btn-infor btn-delete-noti" data-id={{this.noti}} disabled>X</btn> --}}
+      </td>
+    </tr>
+    {{else}}
+    <tr>
+     <td></td>
+      <td scope="col-5">Hòm thư trống !</td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+
+{{!-- //Form xóa notifications --}}
+<form id="form-delete" method="post"></form>
+<script >
+  var formDelete = document.getElementById("form-delete")
+  var btns = document.querySelectorAll('.btn-delete-noti')
+
+  for(var i = 0 ; i < btns.length ; i++) {
+    let notiContent = btns[i].getAttribute('data-id')
+    console.log(notiContent)
+    btns[i].onclick = function(){
+      formDelete.action = `/me/${notiContent}/delete-notifications`
+      formDelete.submit()
+    }
+  }
+
+
+
+</script>

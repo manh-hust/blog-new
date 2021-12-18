@@ -1,0 +1,127 @@
+<div class="mt-4">
+    <div class="container">
+        <div class="row justify-content-around">
+
+            <div class="col-6">
+                <h3>Thông tin cá nhân</h3>
+                <form class="mt-4" name="form-infor" method="POST" action="/user/{{this._id}}?_method=PUT">
+                    <div class="form-group">
+                        <label for="admin">Chức vụ</label>
+                        <input type="text" class="form-control" id="admin" name="admin"
+                            value="{{#if this.admin_id}}Admin{{else}}User{{/if}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Tên</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{this.name}}" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Avatar</label>
+                        <select name="avatar" class="form-control" id="exampleFormControlSelect1" disabled
+                            data-avatar="{{this.avatar}}">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="0">0</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Tên đăng nhập/Email</label>
+                        <input type="text" class="form-control" id="email" name="email" value="{{this.email}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Password</label>
+                        <input type="password" class="form-control" id="pass" name="pass" value="9999999999"
+                            disabled>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-edit">Chỉnh sửa</button>
+                    <button type="submit" class="btn btn-primary btn-edit ml-2">Lưu lại</button>
+                </form>
+            </div>
+            <div class="col-3 ">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <h4 class=""> Avatar</h4>
+                        <ul>
+
+                            <li class="avatar-item close">
+                                <img src="/img/avata-user-1.png" alt="Avatar"
+                                    class="img-thumbnail mt-5 rounded-circle border border-warning">
+                            </li>
+                            <li class="avatar-item close">
+                                <img src="/img/avata-user-2.png" alt="Avatar"
+                                    class="img-thumbnail mt-5 rounded-circle border border-warning">
+
+                            </li>
+                            <li class="avatar-item close">
+                                <img src="/img/avata-user-3.png" alt="Avatar"
+                                    class="img-thumbnail mt-5 rounded-circle border border-warning">
+
+                            </li>
+                            <li class="avatar-item close">
+                                <img src="/img/avata-user-4.png" alt="Avatar"
+                                    class="img-thumbnail mt-5 rounded-circle border border-warning">
+                            </li>
+                            <li class="avatar-item close">
+                                <img src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-vector-users-icon-png-image_4144740.jpg"
+                                    alt="Avatar" class="img-thumbnail mt-5 rounded-circle border border-warning">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var inputs = document.querySelectorAll("input[disabled]")
+    var btnEdit = $(".btn-edit")
+    var selectAvatar = $('#exampleFormControlSelect1')
+    var options = $('option')
+    var idAvatar = selectAvatar.data('avatar')
+    var listAvatar = $('.avatar-item')
+    var admin = $('#admin').val()
+
+
+    if (admin !== "Admin") {
+        options[4].style.display = "none"
+        selectAvatar.change(function () {
+            var id = selectAvatar.val()
+            for (let i = 0; i < listAvatar.length; i++) {
+                if (i != id - 1) {
+                    listAvatar[i].classList.add('close')
+                }
+                else {
+                    listAvatar[id - 1].classList.remove('close')
+                }
+            }
+        })
+        if (idAvatar) {
+            listAvatar[idAvatar - 1].classList.remove('close')
+            options[idAvatar - 1].setAttribute('selected', 'selected')
+        }
+        else {
+            listAvatar[0].classList.remove('close')
+            options[0].setAttribute('selected', 'selected')
+        }
+    }
+    else {
+            options[4].setAttribute('selected', 'selected')
+            listAvatar[4].classList.remove('close')
+
+    }
+
+
+    btnEdit.click(function () {
+        for (var i = 0; i < inputs.length; i++) {
+            if (i != 0 && i != 2) {
+                inputs[i].removeAttribute('disabled')
+            }
+        }
+        if (admin !== 'Admin')
+            selectAvatar.removeAttr('disabled')
+    })
+
+</script>

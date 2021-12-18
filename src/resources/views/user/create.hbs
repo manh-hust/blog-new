@@ -1,0 +1,81 @@
+<div class="mt-4">
+    <h3>Đăng kí</h3>
+    <form method="POST" action="/user/store" id="form">
+        <div class="form-group">
+            <label for="name">Tên người dùng</label>
+            <input type="text" class="form-control" id="name" name="name" required value="{{name}}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required value="{{email}}">
+        </div>
+        {{#if hadEmail}}
+        <div id="alert-email" class="alert alert-danger fade show " role="alert">
+            Đã tồn tại Email !
+        </div>
+        {{/if}}
+        <div class="form-group">
+            <label for="pass">Password</label>
+            <input type="password" class="form-control" id="pass" name="pass" required value="{{pass}}">
+        </div>
+        <div class="form-group">
+            <label for="pass-confirm">Confirm</label>
+            <input type="password" class="form-control" id="pass-confirm" name="pass-confirm" required value="{{pass}}">
+        </div>
+        <div id="pass-danger-alert" class="alert alert-danger close" role="alert">
+            Pass is not confirmed !
+        </div>
+        <div id="pass-success-alert" class="alert alert-success close" role="alert">
+            Pass is accepted !
+        </div>
+        <button id="btn-submit" class="btn btn-primary" type="submit" class="btn btn-primary">Đăng kí </button>
+    </form>
+</div>
+
+<script>
+    const form = $('#form')
+    const pass = $('#pass');
+    const btnSubmit = $('#btn-submit');
+    const passConfirm = $('input[name="pass-confirm"]');
+    const alertDanger = $('#pass-danger-alert');
+    const alertSuccess = $('#pass-success-alert');
+    const alertTimeout = $('#alert-email');
+
+    // Cảnh báo Email bị trùng biến mất sau 3s
+    setTimeout(() => {
+        alertTimeout.addClass('close');
+    }, 3000)
+
+    var passValue;
+    var passConfirmValue;
+    pass.focusout('input', function () {
+        passValue = pass.val()
+    })
+    passConfirm.focusout('input', function () {
+        passConfirmValue = passConfirm.val()
+    })
+    // Khi pass khớp thì hiện thông báo
+    passConfirm.on('input', function () {
+        passConfirmValue = passConfirm.val()
+        if (passValue === passConfirmValue && passValue) {
+            alertSuccess.removeClass('close')
+        }
+        else {
+            alertSuccess.addClass('close')
+        }
+    })
+
+    passConfirm.focusin('input', function () {
+        alertDanger.addClass('close')
+    })
+    btnSubmit.click(function (e) {
+        if (passValue === passConfirmValue && passValue && passConfirmValue) {
+            form.submit()
+        }
+        else if (passValue !== passConfirmValue && passValue && passConfirmValue) {
+            e.preventDefault();
+            alertDanger.removeClass('close')
+        }
+    })
+
+</script>

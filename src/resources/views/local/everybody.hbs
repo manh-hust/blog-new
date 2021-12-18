@@ -1,0 +1,83 @@
+<div class="body-local-friends" data-id={{friends}}>
+    <a href="/me/friends" class="btn btn-danger"><span class="oi oi-chevron-left"></span></a>
+    <div class="container">
+        <div id="item" class="row mt-5 mb-5">
+            {{#each users}}
+              <div class="col-sm-6 col-lg-4 col-xl-3 mt-2 mb-2">
+                     <div class="card">
+                         <img class="card-img-top" src="/img/avata-user-{{this.avatar}}.png" alt="Card image cap">
+                         <div class="card-body card-body-user" >
+                             <h6 class="card-text btn-block btn-lg text-center card-text-user text-truncate">{{this.name}} <span class="oi oi-check oi-close"></span></h6>
+                             <div class="btn-group btn-group-local-everybody" data-id={{this._id}}>               
+                            {{!-- <button class="btn btn-info disabled mr-2">Bạn bè</button> --}}
+                                <button  class="btn btn-secondary btn-delete-friend close" data-toggle="modal" data-target="#exampleModal">Hủy kết bạn</button>
+                                <button class="btn outline-info btn-add-friend close" >Thêm bạn bè</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+            {{/each}}
+        </div>
+    </div>
+
+</div>
+
+{{!-- // Modal --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Hủy kết bạn</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Tình bạn này coi như chưa tồn tại ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy thao tác</button>
+        <button id="deleteUserModal" type="button" class="btn btn-primary">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- // Form Add --}}
+<form id="form-add-friend" method="POST"></form>
+{{!-- // Form Delete --}}
+<form id="form-delete-friend" method="POST"></form>
+<script>
+    const formAdd = document.getElementById('form-add-friend')
+    const formDelete = document.getElementById('form-delete-friend')
+    const btnDeleteModal = document.getElementById('deleteUserModal')
+
+    var bodyListUser = document.querySelector('.body-local-friends')
+    var listFriend = bodyListUser.getAttribute('data-id').split(',')
+
+    var listBtnGroup = document.querySelectorAll('.btn-group')
+
+    var id1;
+    for (var i = 0; i < listBtnGroup.length; i++) {
+        let id = listBtnGroup[i].getAttribute('data-id')
+        if(listFriend.indexOf(id) > -1) {
+            listBtnGroup[i].firstElementChild.classList.remove('close')
+            listBtnGroup[i].firstElementChild.onclick = function() {
+                id1 = id
+            }
+              btnDeleteModal.onclick = function() {  
+                formDelete.action = '/me/' + id1 + '/deletefriend'
+                formDelete.submit()
+            }
+          
+        }
+        else {
+            listBtnGroup[i].lastElementChild.classList.remove('close')
+            listBtnGroup[i].previousElementSibling.firstElementChild.remove('close')
+              listBtnGroup[i].lastElementChild.onclick = function() {  
+                formAdd.action = '/me/' + id + '/addfriend'
+                formAdd.submit()
+            }
+        }   
+    }
+</script>    

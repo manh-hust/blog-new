@@ -1,0 +1,91 @@
+{{#if this._id}}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/home">TikiEdu</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        {{#if this.nameLogined }}
+        {{#if this.admin_id}}
+        <li class="nav-item active">
+          <a class="nav-link" href="/user/list-users">Quản lí người dùng<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/me/stored/courses">Quản lí khóa học<span class="sr-only">(current)</span></a>
+        </li>
+        {{/if}}
+        {{!-- ====== Avatar ======== --}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/user/{{this._id}}/infor" id="navbarDropdown" role="button"
+            data-toggle="dropdown">
+            {{#if this.admin_id}}
+            <img
+              src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-vector-users-icon-png-image_4144740.jpg"
+              alt="" class="user-avatar">
+            {{else}}
+            {{#if this.avatar}}
+            <img src="/img/avata-user-{{this.avatar}}.png" alt="Avatar" class="user-avatar">
+            {{else}}
+            <img src="/img/avata-user-1.png" alt="Avatar" class="user-avatar">
+            {{/if}}
+            {{/if}}
+            {{this.nameLogined}}
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {{#if this.admin_id}}
+            <a class="dropdown-item" href="/courses/create">Thêm khóa học </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/admin/create/notifications">Thêm thông báo</a>
+            <div class="dropdown-divider"></div>
+            {{/if}}
+            <a class="dropdown-item" href="/me/stored/courses">Khóa học của tôi</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/me/friends">Bạn bè</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/user/{{this._id}}/infor">Thông tin cá nhân</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/auth/login">Đăng xuất</a>
+          </div>
+        </li>
+        {{/if}}
+        {{!-- ====== Bell ====== --}}
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <span class="oi oi-bell"></span>
+          </a>
+          <div class="dropdown-menu drop-menu-bell pb-0" aria-labelledby="navbarDropdown">
+            <h5 class="text-center">Thông báo</h5>
+            <div class="dropdown-divider"></div>
+            {{#each this.notifications}}
+            <div class="item-noti">
+              <a class="item-noti-link" href="/me/stored/notifications">Admin</a>
+              <p class="text-truncate">{{this.noti}}</p>
+              <div class="dropdown-divider"></div>
+            </div>
+            {{else}}
+               <div class="item-noti">
+              <h6 class="text-truncate text-center text-secondary">Không có thông báo</h6>
+              <div class="dropdown-divider"></div>
+            </div>
+            {{/each}}
+            {{#if this.notifications}}
+            <a href="/me/stored/notifications" class="btn btn-primary btn-watch-noti">Xem tất cả</a>
+            {{/if}}
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+  <form class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>
+{{/if}}

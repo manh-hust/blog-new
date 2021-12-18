@@ -1,0 +1,98 @@
+<div class="container">
+    <h3 class="mt-3 mb-3">Danh sách bạn bè</h3>
+    <a href="/local/everybody" class="mt-3 mb-3">Bạn có thể biết ?</a>
+    <table class="table">
+        <tbody>
+            {{#each users}}
+            <tr>
+                <td>
+                    <img src="/img/avata-user-{{this.avatar}}.png" alt="" class="user-avatar">
+                    {{this.name}}
+                </td>
+                <td>Trở thành bạn bè từ T{{this.month}}</td>
+                <td><a href="#" id="{{this.id}}"  class="select-user-send-message"><span class="oi oi-comment-square"></span> Gửi tin nhắn </a></td>
+            </tr>
+            {{else}}
+            <tr>
+                Chưa có bạn bè !
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- /// Modal chat --}}
+<div class="modal-container">
+    {{#each users}}
+    <div class="modal__chat modal__chat-{{this.id}}">
+    <div class="modal__chat-header">
+        <div class="header-left">
+            <div  class="header-left-img">
+                <img src="/img/avata-user-{{avatar}}.png" alt="" class="header-img ">
+            </div>
+            <div class="header-left-status">
+                <div class="header-name">
+                    <span class="header-name-select">{{this.name}}</span>
+                </div>
+                <div class="header-status">
+                    <span>Đang hoạt động</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <span  data-id={{this.id}} class="oi oi-x close-icon close-tab-chat"></span>
+        </div>
+    </div>
+    <div class="modal__chat-body">
+        <ul class="list-mesage">
+            {{#each this.messages}}
+                {{#if this._id}}
+            <li class="item-messge item-message-send">
+                <div>
+                    <img src="/img/avata-user-{{../avatar}}.png" alt="" class="header-img  header-img-small img-hide">
+                </div>
+                <span class="text-message text-message-send">{{this.message}}</span>
+            </li>
+                {{else}}
+            <li class="item-messge">
+                <div >
+                    <img src="/img/avata-user-{{../avatar}}.png" alt="" class="header-img  header-img-small">
+                </div>
+                <span class="text-message">{{this.message}}</span>
+            </li>
+
+             {{/if}}
+            {{/each}}
+        </ul>
+    </div>
+    <div class="modal__chat-control">
+        <input type="text" placeholder="Aa" class="form-control input-send-message">
+        <button class="btn btn-primary btn-send-message">Send</button>
+    </div>
+    </div>
+    {{/each}}
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.modal__chat-body').scrollTop(240)
+        $('.modal__chat').hide()
+        $('.close-tab-chat').on('click', function(){
+            let id = this.getAttribute('data-id')
+            $(`.modal__chat-${id}`).hide(100)
+            $('.input-send-message').val('')
+        })
+        $('.select-user-send-message').click(function(){
+            let id = this.getAttribute('id')
+            $(`.modal__chat-${id}`).show(100)
+        })
+    })
+</script>
+{{!-- 
+<script src="socket.io/socket.io.js"></script>
+<script>
+  var socket = io("http://localhost:3001")
+  $(document).ready(function(){
+    socket.emit('test', 1234)
+  })
+</script> --}}

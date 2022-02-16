@@ -54,12 +54,3 @@ app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
 });
 
-
-// var server = require('http').Server(app);
-// var io = require('socket.io')(server);
-// server.listen(port);
-// app.io = io;
-// io.on('connection', function (socket) {
-//     console.log(socket.id + ' connected');
-// });
-// app;

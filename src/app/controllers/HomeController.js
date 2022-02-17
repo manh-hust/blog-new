@@ -38,7 +38,6 @@ class HomeController {
                 .catch(next);
         }
     }
-
     //[GET] /HOME
     show(req, res, next) {
         res.render('home', {
@@ -46,6 +45,12 @@ class HomeController {
             isSlider: true,
         });
     }
+    //[GET] /couser
+    async getCouser(req, res, next) {
+        const couser = await Course.find({})
+        res.send(couser)
+    }
+
 }
 
 module.exports = new HomeController();

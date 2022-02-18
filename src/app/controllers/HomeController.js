@@ -1,4 +1,5 @@
 const Course = require('../models/course');
+const Users = require('../models/user')
 const { multipleMongooseToObj } = require('../../util/mongoose');
 
 const PAGE_SIZE = 8;
@@ -49,6 +50,11 @@ class HomeController {
     async getCouser(req, res, next) {
         const couser = await Course.find({})
         res.send(couser)
+    }
+    //[GET] /user
+    async getUsers(req, res, next) {
+        const users = await Users.find({})
+        res.send(users)
     }
 
 }

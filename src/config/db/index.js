@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // const test = require('./postdb.test');
 async function connect() {
     try {
-        await mongoose.connect('mongodb+srv://DDManh:conchimxanh874@cluster0.cgmrz.mongodb.net/ddm_education_dev', {
+        await mongoose.connect(process.env.DB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

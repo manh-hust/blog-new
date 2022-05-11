@@ -4,11 +4,11 @@ const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
-
 const SortMiddleware = require('./app/middleware/sortMiddleware');
+require("dotenv").config();
 
 const app = express();
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 
 const route = require('./routes');
 const db = require('./config/db');

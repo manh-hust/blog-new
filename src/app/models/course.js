@@ -61,4 +61,4 @@ Course.plugin(mongooseDelete, {
     overrideMethods: 'all',
 });
 
-module.exports = mongoose.model('Course', Course);
+module.exports = mongoose.model('Courses', Course);

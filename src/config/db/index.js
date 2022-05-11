@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const test = require('./postdb.test');
+// const test = require('./postdb.test');
 async function connect() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/ddm_education_dev', {
+        await mongoose.connect('mongodb+srv://DDManh:conchimxanh874@cluster0.cgmrz.mongodb.net/ddm_education_dev', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        await test.test()
+        // await test.test()
         console.log('Connect OKKKKK !');
     } catch (error) {
         console.log('Connect Fail !');

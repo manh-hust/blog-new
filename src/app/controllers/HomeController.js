@@ -6,6 +6,10 @@ const PAGE_SIZE = 8;
 
 class HomeController {
     //[GET] /Homes
+    // async test(req, res, next){
+    //     const cousers = await Course.find({})
+
+    // }
     index(req, res, next) {
         var page = req.query.page;
         if (page) {

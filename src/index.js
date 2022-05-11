@@ -5,7 +5,7 @@ const handlebars = require('express-handlebars');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 
-const SortMiddleware = require('./app/middleware/SortMiddleware');
+const SortMiddleware = require('./app/middleware/sortMiddleware');
 
 const app = express();
 const port = process.env.port || 3000;

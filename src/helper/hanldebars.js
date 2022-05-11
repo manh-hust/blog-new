@@ -1,5 +1,4 @@
 const Handlebars = require('handlebars');
-const paginate = require('handlebars-paginate');
 
 module.exports = {
     sum: (a, b) => a + b,

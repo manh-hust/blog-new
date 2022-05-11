@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const SortMiddleware = require('./app/middleware/SortMiddleware');
 
 const app = express();
-const port = process.env.port || 3001;
+const port = process.env.port || 3000;
 
 const route = require('./routes');
 const db = require('./config/db');

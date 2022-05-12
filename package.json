@@ -50,7 +50,7 @@
     "mongoose-sequence": "^5.3.1",
     "mongoose-slug-generator": "^1.0.4",
     "morgan": "^1.10.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.1",
     "nodemon": "^2.0.7",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
